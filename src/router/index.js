@@ -6,13 +6,18 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
-      alias: '/notebooks',
+      path:'/',
+      //重进money
+      redirect:'/login',
+      component:()=>import('@/views/Login/Login.vue')
+    },
+    {
+      path: '/notebooks',
       component: () => import('@/components/NotebookList.vue')
     },
     {
       path: '/login',
-      component: () => import('@/components/Login.vue')
+      component: () => import('@/views/Login/Login.vue')
     },
     {
       path: '/note/:noteId',

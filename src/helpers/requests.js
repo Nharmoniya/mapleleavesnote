@@ -4,17 +4,18 @@ import {Message} from 'element-ui';
 //axios响应头，直接copy官方文档
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 //axios接口地址
-axios.defaults.baseURL = 'https://note-server.hunger-valley.com'
+axios.defaults.baseURL = 'http://note-server.hunger-valley.com'
+axios.defaults.withCredentials = true
 // axios.defaults.baseURL = '//localhost:3006'
 
 //
-export default function request(url, type = 'GET', data = {}) {
+export default function  request(url, type = 'GET', data = {}) {
   return new Promise((resolve, reject) => {
     let option = {
       url,
       method: type,
-      validateStatus(status){
-        return (status>=200 && status<300)||status===400
+      validateStatus(status) {
+        return (status >=200 && status < 300) || status === 400
       }
     }
     if(type.toLowerCase() === 'get') {
@@ -22,22 +23,14 @@ export default function request(url, type = 'GET', data = {}) {
     }else {
       option.data = data
     }
-    if(sessionStorage.token) {
-      axios.defaults.headers.common['Authorization']  = sessionStorage.token
-    }
-
     axios(option).then(res => {
-      if(res.data.status === 200) {
-        if(res.data.token) {
-          sessionStorage.token = res.data.token
-        }
+      if(res.status === 200) {
         resolve(res.data)
-      }else{
+      }else {
         Message.error(res.data.msg)
         reject(res.data)
       }
-      // eslint-disable-next-line no-unused-vars
-    } ).catch(err => {
+    }).catch(() => {
       Message.error('网络异常')
       reject({ msg: '网络异常' })
     })
