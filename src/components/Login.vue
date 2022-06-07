@@ -11,19 +11,20 @@
               show-password>
       密码：
     </el-input>
-    <p v-bind:class="{error: login.isError}"> {{login.notice}}</p>
+    <div class="notice_box"><p v-bind:class="{error: login.isError}"> {{ login.notice }}</p></div>
     <el-button type="success" class="confirm_login" @click="onLogin">登录</el-button>
   </div>
 </template>
 
 <script>
 import {mapActions} from 'vuex';
+import {Message} from 'element-ui';
 
 export default {
   data() {
     return {
       isShowLogin: true,
-      login:{
+      login: {
         username: '',
         password: '',
         notice: '输入用户名和密码',
@@ -35,33 +36,37 @@ export default {
     ...mapActions({
       loginUser: 'login',
     }),
-    showLogin(){
-      this.isShowLogin = true
-      this.isShowRegister = false
+    showLogin() {
+      this.isShowLogin = true;
+      this.isShowRegister = false;
     },
-   onLogin(){
-     if(!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)){
-       this.login.isError = true
-       this.login.notice = '用户名3~15个字符，仅限于字母数字下划线中文'
-       return
-     }
-     if(!/^.{6,16}$/.test(this.login.password)){
-       this.login.isError = true
-       this.login.notice = '密码长度为6~16个字符'
-       return
-     }
+    onLogin() {
+      if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
+        this.login.isError = true;
+        this.login.notice = '用户名3~15个字符，仅限于字母数字下划线中文';
+        return;
+      }
+      if (!/^.{6,16}$/.test(this.login.password)) {
+        this.login.isError = true;
+        this.login.notice = '密码长度为6~16个字符';
+        return;
+      }
+      this.login.isError=false;
+      this.login.notice='';
+
       this.loginUser({
-        username:this.login.username,
-        password:this.login.password
-      }).then(()=>{
-        this.login.isError = false
-        this.login.notice = ''
-        this.$router.push({path:'/notebooks'})
-      }).catch(data=>{
-        this.login.isError = true
-        this.login.notice = data.msg
-      })
-   },
+        username: this.login.username,
+        password: this.login.password
+      }).then(() => {
+        this.login.isError = false;
+        this.login.notice = '';
+        Message.success('恭喜你，登录成功!')
+        this.$router.push({path: '/notebooks'});
+      }).catch(data => {
+        this.login.isError = true;
+        this.login.notice = data.msg;
+      });
+    },
 
   }
 
@@ -93,15 +98,27 @@ export default {
 
   .confirm_login {
     width: 300px;
-    margin-top: 60px;
+    margin-top: 70px;
     margin-left: 50px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
-  p{
-    color: red;
-    margin-top: 10px;
-    margin-left: 50px;
+
+  .notice_box {
+    width: 398px;
+    height: 50px;
+    border: 1px solid white;
+    p {
+      display: none;
+      margin-top: 10px;
+      margin-left: 50px;
+      font-size: 14px;
+    }
+    .error {
+      display: block;
+      color: red;
+    }
   }
+
 }
 
 </style>

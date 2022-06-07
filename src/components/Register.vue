@@ -11,7 +11,7 @@
               show-password>
       密码：
     </el-input>
-    <p v-bind:class="{error: register.isError}"> {{register.notice}}</p>
+    <div class="notice_box"><p v-bind:class="{error: register.isError}"> {{register.notice}}</p></div>
     <el-button type="success" class="confirm_login" @click="onRegister">注册</el-button>
   </div>
 </template>
@@ -58,7 +58,7 @@ export default {
       }).then(() => {
         this.register.isError = false
         this.register.notice = ''
-        this.$router.push({ path: 'notebooks' })
+        this.$router.push({ path: '/notebooks' })
       }).catch(data => {
         this.register.isError = true
         this.register.notice = data.msg
@@ -94,16 +94,25 @@ export default {
 
   .confirm_login {
     width: 300px;
-    margin-top: 60px;
+    margin-top: 70px;
     margin-left: 50px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
-  p{
-    color: red;
-    margin-top: 10px;
-    margin-left: 50px;
+  .notice_box {
+    width: 398px;
+    height: 50px;
+    border: 1px solid white;
+    p {
+      display: none;
+      margin-top: 10px;
+      margin-left: 50px;
+      font-size: 14px;
+    }
+    .error {
+      display: block;
+      color: red;
+    }
   }
-
 }
 
 </style>

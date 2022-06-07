@@ -1,31 +1,37 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from 'vue';
+import Router from 'vue-router';
 
-Vue.use(Router)
+Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
-      path:'/',
-      //重进money
-      redirect:'/login',
-      component:()=>import('@/views/Login/Login.vue')
-    },
-    {
-      path: '/notebooks',
-      component: () => import('@/components/NotebookList.vue')
+      path: '/',
+      //重定向login
+      redirect: '/login',
+      component: () => import('@/views/Login/Login.vue')
     },
     {
       path: '/login',
       component: () => import('@/views/Login/Login.vue')
     },
     {
+      path: '/notebooks',
+      component: () => import('@/components/NotebookList.vue'),
+    },
+    {
       path: '/note/:noteId',
-      component: () => import('@/components/NoteDetail.vue')
+      component: () => import('@/components/NoteDetail.vue'),
     },
     {
       path: '/trash',
-      component: () => import('@/components/TrashDetail.vue')
+      component: () => import('@/components/TrashDetail.vue'),
+    },
+    {
+      path:'*',
+      component: () => import('@/views/Login/Login.vue'),
     }
   ]
-})
+});
+
+export default router
