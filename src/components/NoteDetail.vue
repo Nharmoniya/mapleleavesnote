@@ -1,12 +1,14 @@
 <template>
   <div id="note-detail">
-    <h1>{{msg}} : {{ $route.params.noteId }}</h1>
+    <slider></slider>
   </div>
 </template>
 
 <script>
+import Slider from '@/components/Slider';
 export default {
   name: 'Login',
+  components: {Slider},
   data () {
     return {
       msg: '笔记详情页'
@@ -16,7 +18,7 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  color: blue;
+#note-detail{
+  flex: 1;
 }
 </style>

@@ -9,14 +9,14 @@ const router = new Router({
       path: '/',
       //重定向login
       redirect: '/login',
-      component: () => import('@/views/Login/Login.vue')
+      component: () => import('@/views/Login/Login.vue'),
     },
     {
       path: '/login',
-      component: () => import('@/views/Login/Login.vue')
+      component: () => import('@/views/Login/Login.vue'),
     },
     {
-      path: '/notebooks',
+      path: '/notebooklist',
       component: () => import('@/components/NotebookList.vue'),
     },
     {
@@ -27,11 +27,7 @@ const router = new Router({
       path: '/trash',
       component: () => import('@/components/TrashDetail.vue'),
     },
-    {
-      path:'*',
-      component: () => import('@/views/Login/Login.vue'),
-    }
   ]
 });
 
-export default router
+export default router;

@@ -46,6 +46,8 @@ export default {
   height: 100%;
   display: flex;
   justify-content: center;
+  z-index: 100;
+  background-color: gainsboro;
 
   .loginFrame {
     margin-top: 80px;

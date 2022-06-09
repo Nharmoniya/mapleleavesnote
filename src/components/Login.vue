@@ -3,11 +3,13 @@
     <el-input class="username_input"
               placeholder="请输入您的账号"
               v-model="login.username"
+              prefix-icon="el-icon-user"
               clearable>
     </el-input>
     <el-input class="password_input"
               placeholder="请输入您的密码"
               v-model="login.password"
+              prefix-icon="el-icon-coin"
               show-password>
       密码：
     </el-input>
@@ -17,8 +19,8 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
 import {Message} from 'element-ui';
+import {mapActions} from 'vuex'
 
 export default {
   data() {
@@ -34,12 +36,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      loginUser: 'login',
+      loginUser:'login',
     }),
-    showLogin() {
-      this.isShowLogin = true;
-      this.isShowRegister = false;
-    },
     onLogin() {
       if (!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.login.username)) {
         this.login.isError = true;
@@ -51,9 +49,6 @@ export default {
         this.login.notice = '密码长度为6~16个字符';
         return;
       }
-      this.login.isError=false;
-      this.login.notice='';
-
       this.loginUser({
         username: this.login.username,
         password: this.login.password
@@ -61,9 +56,9 @@ export default {
         this.login.isError = false;
         this.login.notice = '';
         Message.success('恭喜你，登录成功!')
-        this.$router.push({path: '/notebooks'});
+        this.$router.push({path: 'notebooklist'});
       }).catch(data => {
-        this.login.isError = true;
+        this.login.isError= true;
         this.login.notice = data.msg;
       });
     },

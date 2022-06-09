@@ -1,7 +1,7 @@
 import loginApi from '@/api/loginApi';
 import router from '@/router';
 
-
+window.router = router
 const state = {
   user: null
 };
@@ -19,6 +19,7 @@ const mutations = {
 const actions = {
   login({commit}, {username, password}) {
     return loginApi.login({username, password}).then(res => {
+      console.log(res.data)
       commit('setUser', {user: res.data});
     });
   },
@@ -27,23 +28,27 @@ const actions = {
       commit('setUser', {user: res.data});
     });
   },
-  logout({commit}, payload = {path: '/login'}) {
-    // eslint-disable-next-line no-unused-vars
-    return loginApi.logout().then(res => {
-      commit('setUser',{user:null})
-      router.push(payload)
-    });
-  },
-  checkLogin({commit,state},payload={path:'/'}){
-     if(state.user!==null) return Promise.resolve()
-     return loginApi.auth().then(res=>{
-       if (!res.isLogin){
-         router.push(payload)
-       } else{
-         commit('setUser',{user:res.data})
-       }
-     })
+  // logout({commit}, payload = {path: '/login'}) {
+  //   // eslint-disable-next-line no-unused-vars
+  //   return loginApi.logout().then(res => {
+  //     commit('setUser',{user:null})
+  //     router.push(payload)
+  //   });
+  // },
+
+  checkLogin({ commit }, payload) {
+    return loginApi.auth()
+      .then(res => {
+        if(res.isLogin===false) {
+          console.log(res.isLogin)
+          console.log('jump')
+          router.push(payload)
+        } else {
+          commit('setUser', { user: res.data })
+        }
+      })
   }
+
 };
 
 

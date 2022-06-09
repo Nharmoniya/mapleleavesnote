@@ -3,11 +3,13 @@
     <el-input class="username_input"
               placeholder="请输入您的账号"
               v-model="register.username"
+              prefix-icon="el-icon-user"
               clearable>
     </el-input>
     <el-input class="password_input"
               placeholder="请输入您的密码"
               v-model="register.password"
+              prefix-icon="el-icon-coin"
               show-password>
       密码：
     </el-input>
@@ -19,6 +21,7 @@
 <script>
 
 import {mapActions} from 'vuex';
+import {Message} from 'element-ui';
 
 export default {
   data() {
@@ -32,14 +35,11 @@ export default {
       }
     };
   },
+
   methods: {
     ...mapActions({
       registerUser: 'register',
     }),
-    showRegister(){
-      this.isShowLogin = false
-      this.isShowRegister = true
-    },
     onRegister(){
       if(!/^[\w\u4e00-\u9fa5]{3,15}$/.test(this.register.username)){
         this.register.isError = true
@@ -51,14 +51,14 @@ export default {
         this.register.notice = '密码长度为6~16个字符'
         return
       }
-
       this.registerUser({
         username: this.register.username,
         password: this.register.password
       }).then(() => {
         this.register.isError = false
         this.register.notice = ''
-        this.$router.push({ path: '/notebooks' })
+        Message.success('恭喜你，注册成功！')
+        this.$router.push({ path: 'notebooklist' })
       }).catch(data => {
         this.register.isError = true
         this.register.notice = data.msg
