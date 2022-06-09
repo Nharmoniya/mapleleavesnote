@@ -36,11 +36,12 @@ const actions = {
   //   });
   // },
 
-  checkLogin({ commit }, payload) {
+  checkLogin({ commit,state }, payload) {
+    if(state.user !== null) return Promise.resolve()
     return loginApi.auth()
       .then(res => {
-        if(res.isLogin===false) {
-          console.log(res.isLogin)
+        if(!res.isLogin) {
+          console.log(res,res.isLogin)
           console.log('jump')
           router.push(payload)
         } else {

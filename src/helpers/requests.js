@@ -5,12 +5,12 @@ import {Message} from 'element-ui';
 //axios响应头，直接copy官方文档
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 //axios接口地址
-axios.defaults.baseURL = 'http://note-server.hunger-valley.com'
+axios.defaults.baseURL = 'https://note-server.hunger-valley.com'
 //是否使用跨域请求true
-axios.defaults.withCredentials = true
+axios.defaults.withCredentials=true
 
 
-export default function request(url, type = 'GET', data = {}){
+export default function request(url, type = 'GET', data = {}) {
   return new Promise((resolve, reject) => {
     let option = {
       url,
@@ -37,6 +37,7 @@ export default function request(url, type = 'GET', data = {}){
     })
   })
 }
+
 //使用方式👇
 // request('/auth/login', 'POST', {username: 'hunger', password: '123456'})
 //   .then(data=>{

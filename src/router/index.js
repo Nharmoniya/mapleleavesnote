@@ -4,6 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 const router = new Router({
+  mode:'history',
   routes: [
     {
       path: '/',
@@ -18,6 +19,9 @@ const router = new Router({
     {
       path: '/notebooklist',
       component: () => import('@/components/NotebookList.vue'),
+      meta:{
+        requireAuth:true,
+      }
     },
     {
       path: '/note/:noteId',
