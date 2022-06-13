@@ -4,7 +4,7 @@ import Router from 'vue-router';
 Vue.use(Router);
 
 const router = new Router({
-  mode:'history',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -19,8 +19,8 @@ const router = new Router({
     {
       path: '/notebooklist',
       component: () => import('@/components/NotebookList.vue'),
-      meta:{
-        requireAuth:true,
+      meta: {
+        requireAuth: true,
       }
     },
     {
@@ -31,6 +31,11 @@ const router = new Router({
       path: '/trash',
       component: () => import('@/components/TrashDetail.vue'),
     },
+    {
+      path: '*',
+      redirect: '/login',
+      component: () => import('@/views/Login/Login.vue'),
+    }
   ]
 });
 
