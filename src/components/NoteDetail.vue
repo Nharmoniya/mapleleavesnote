@@ -167,7 +167,7 @@ export default {
 
       .iconfont {
         margin-left: 4px;
-        font-size: 24px;
+        font-size: 16px;
         cursor: pointer;
         align-self: end;
       }
