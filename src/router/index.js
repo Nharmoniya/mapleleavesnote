@@ -24,7 +24,7 @@ const router = new Router({
       }
     },
     {
-      path: '/note/:noteId',
+      path: '/note',
       component: () => import('@/components/NoteDetail.vue'),
     },
     {

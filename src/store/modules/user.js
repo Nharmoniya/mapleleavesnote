@@ -41,7 +41,6 @@ const actions = {
     return loginApi.auth()
       .then(res => {
         if(!res.isLogin) {
-          console.log(res,res.isLogin)
           console.log('jump')
           router.push(payload)
         } else {

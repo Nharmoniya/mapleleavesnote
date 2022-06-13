@@ -2,7 +2,7 @@
   <div id="sidebar">
     <avatar/>
     <div class="icons">
-      <router-link to="/note/:noteId" title="笔记"><i class="iconfont el-icon-notebook-2"></i></router-link>
+      <router-link to="/note" title="笔记"><i class="iconfont el-icon-notebook-2"></i></router-link>
       <router-link to="/notebooklist" title="笔记本"><i class="iconfont el-icon-s-order"></i></router-link>
       <router-link to="/trash" title="回收站"><i class="iconfont el-icon-delete-solid"></i></router-link>
     </div>

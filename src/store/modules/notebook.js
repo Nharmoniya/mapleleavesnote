@@ -2,7 +2,9 @@ import Notebook from '@/api/notebookApi.js'
 import { Message } from 'element-ui'
 
 const state = {
+  //实时存储notebooks中的数据
   notebooks: null,
+  //
   curBookId: null
 }
 
@@ -36,7 +38,8 @@ const mutations = {
 
   setCurBook(state, payload) {
     state.curBookId = payload.curBookId
-  }
+  },
+
 }
 
 const actions = {

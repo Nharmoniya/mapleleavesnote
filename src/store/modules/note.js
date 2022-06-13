@@ -13,7 +13,8 @@ const getters = {
     if(!Array.isArray(state.notes)) return {}
     if(!state.curNoteId) return state.notes[0] || {}
     return state.notes.find(note => note.id == state.curNoteId) || {}
-  }
+  },
+  noteid:state => state.curNoteId ||[],
 }
 
 const mutations = {
@@ -37,8 +38,7 @@ const mutations = {
 
   setCurNote(state, payload) {
     state.curNoteId = payload.curNoteId
-  }
-
+  },
 }
 
 const actions = {
@@ -59,18 +59,18 @@ const actions = {
 
   updateNote({ commit }, { noteId, title, content }) {
     return Note.updateNote({ noteId }, { title, content })
-      .then(res => {
+      .then(() => {
         commit('updateNote', { noteId, title, content })
       })
   },
 
   deleteNote({ commit }, { noteId }) {
-    return Notebook.deleteNotebook({ noteId })
+    return Note.deleteNote({ noteId })
       .then(res => {
-        commit('deleteNotebook', { noteId })
+        commit('deleteNote', { noteId })
         Message.success(res.msg)
       })
-  }
+  },
 }
 
 

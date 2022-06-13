@@ -1,13 +1,14 @@
-import axios from 'axios'
+import axios from 'axios';
+import baseURLConfig from './config-baseURL';
 import {Message} from 'element-ui';
 
 
 //axios响应头，直接copy官方文档
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //axios接口地址
-axios.defaults.baseURL = 'https://note-server.hunger-valley.com'
+axios.defaults.baseURL = baseURLConfig.baseURL;
 //是否使用跨域请求true
-axios.defaults.withCredentials=true
+axios.defaults.withCredentials = true;
 
 
 export default function request(url, type = 'GET', data = {}) {
@@ -16,26 +17,26 @@ export default function request(url, type = 'GET', data = {}) {
       url,
       method: type,
       validateStatus(status) {
-        return (status >=200 && status < 300) || status === 400
+        return (status >= 200 && status < 300) || status === 400;
       }
-    }
-    if(type.toLowerCase() === 'get') {
-      option.params = data
-    }else {
-      option.data = data
+    };
+    if (type.toLowerCase() === 'get') {
+      option.params = data;
+    } else {
+      option.data = data;
     }
     axios(option).then(res => {
-      if(res.status === 200) {
-        resolve(res.data)
-      }else {
-        Message.error(res.data.msg)
-        reject(res.data)
+      if (res.status === 200) {
+        resolve(res.data);
+      } else {
+        Message.error(res.data.msg);
+        reject(res.data);
       }
     }).catch(() => {
-      Message.error('网络异常')
-      reject({ msg: '网络异常' })
-    })
-  })
+      Message.error('网络异常');
+      reject({msg: '网络异常'});
+    });
+  });
 }
 
 //使用方式👇
