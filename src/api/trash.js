@@ -8,6 +8,7 @@ const URL = {
 };
 
 export default {
+  //获取回收站中的笔记
   getTrash() {
     return new Promise((resolve, reject) => {
       request(URL.GET).then(res => {
@@ -22,9 +23,11 @@ export default {
       });
     });
   },
+  //删除笔记
   deleteNote({noteId}) {
     return request(URL.DELETE.replace(':noteId', noteId), 'DELETE');
   },
+  //还原笔记
   revertNote({noteId}) {
     return request(URL.REVERT.replace(':noteId', noteId), 'PATCH');
   }

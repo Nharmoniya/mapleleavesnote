@@ -1,6 +1,6 @@
 <template>
   <div class="note-sidebar">
-    <span class="btn add-note" @click="onAddNote">添加笔记</span>
+    <el-button class="btn add-note" @click="onAddNote" type="success" title="添加笔记">+添加笔记</el-button>
     <el-dropdown class="notebook-title" @command="handleCommand" placement="bottom" trigger="click">
       <span class="el-dropdown-link">
         {{ curBook.title }} <i class="iconfont icon-down"></i>
@@ -104,13 +104,13 @@ export default {
   width: 290px;
   border-right: 1px solid #ccc;
   background-color: #eee;
-
+  overflow:auto;
   .add-note {
     position: absolute;
     right: 5px;
     top: 12px;
-    color: #666;
-    font-size: 12px;
+    color: white;
+    font-size: 14px;
     padding: 2px 4px;
     box-shadow: 0px 0px 2px 0px #ccc;
     border: none;
@@ -140,7 +140,6 @@ export default {
 
   .menu {
     display: flex;
-    overflow-y: auto;
 
     div {
       font-size: 12px;

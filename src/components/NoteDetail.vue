@@ -12,8 +12,8 @@
           <span> {{ statusText }} </span>
             </span>
           <span class="icon-form">
-          <span class="iconfont el-icon-delete" @click="onDeleteNote"></span>
-          <span class="iconfont el-icon-view" @click="isShowPreview = !isShowPreview"></span>
+          <span class="iconfont el-icon-delete" @click="onDeleteNote" title="删除笔记"></span>
+          <span class="iconfont el-icon-view" @click="isShowPreview = !isShowPreview" title="只读/编辑"></span>
           </span>
         </header>
         <hr/>
