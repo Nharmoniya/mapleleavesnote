@@ -110,7 +110,6 @@ export default {
     position: absolute;
     right: 5px;
     top: 12px;
-    color: white;
     font-size: 14px;
     padding: 2px 4px;
     box-shadow: 0px 0px 2px 0px #ccc;
