@@ -14,8 +14,8 @@
 
 <script>
 
-import avatar from '@/components/Avatar.vue'
-import loginApi from '@/api/loginApi.js'
+import avatar from '@/components/Avatar.vue';
+import {mapActions, mapMutations, mapState} from 'vuex';
 
 export default {
   components: {
@@ -23,12 +23,28 @@ export default {
   },
 
   methods: {
+    ...mapActions(['logout']),
+    ...mapMutations(['setCurBook']),
     onLogout() {
-      loginApi.logout();
-      this.$router.push('/login')
+      this.$confirm('确认要退出登录吗？', '退出登录', {
+        distinguishCancelAndClose: true,
+        confirmButtonText: '退出',
+        cancelButtonText: '取消'
+      })
+          .then(() => {
+            this.logout({path: '/login'});
+            location.reload();
+          })
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: '取消'
+            });
+          });
     }
+
   }
-}
+};
 
 
 </script>
@@ -42,6 +58,7 @@ export default {
   text-align: center;
   background-color: #2c333c;
 }
+
 .icons {
   margin-top: 15px;
   font-size: 18px;
@@ -55,6 +72,7 @@ export default {
 .icons .router-link-active {
   background-color: #5e6266;
 }
+
 .logout {
   position: absolute;
   bottom: 20px;
@@ -63,6 +81,7 @@ export default {
   cursor: pointer;
   font-size: 18px;
 }
+
 .iconfont {
   color: #fff;
 }

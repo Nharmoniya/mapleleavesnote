@@ -8,7 +8,7 @@
         <div>标题</div>
       </div>
       <ul class="notes">
-        <li v-for="note in trashNotes">
+        <li v-for="note in trashNotes" :key="note.id">
           <router-link :to="`/trash?noteId=${note.id}`">
             <span class="date">{{ note.updatedAtFriendly }}</span>
             <span class="title">{{ note.title }}</span>
@@ -18,14 +18,17 @@
     </div>
     <div class="notedetail">
       <div class="note-head">
-        <span>创建日期：{{ this.curTrashNote.createdAtFriendly }}</span>
+        <span v-if="!this.curTrashNote.createdAtFriendly">创建日期:无</span>
+        <span v-if="this.curTrashNote.createdAtFriendly">创建日期：{{ this.curTrashNote.createdAtFriendly }}</span>
         <span> | </span>
-        <span> 更新日期: {{ this.curTrashNote.updatedAtFriendly }}</span>
+        <span v-if="!this.curTrashNote.updatedAtFriendly"> 更新日期:无</span>
+        <span v-if="this.curTrashNote.updatedAtFriendly"> 更新日期: {{ this.curTrashNote.updatedAtFriendly }}</span>
         <span> | </span>
-        <span> 所属笔记本: {{ this.belongTo }}</span>
+        <span v-if="!this.belongTo"> 所属笔记本:无</span>
+        <span v-if="this.belongTo"> 所属笔记本: {{ this.belongTo }}</span>
         <span class="btn-trash">
-          <el-button type="success" @click="onRevert">恢复</el-button>
-          <el-button type="success" @click="onDelete">彻底删除</el-button>
+          <el-button v-if="this.belongTo" type="success" @click="onRevert">恢复</el-button>
+          <el-button v-if="this.belongTo" type="success" @click="onDelete">彻底删除</el-button>
         </span>
       </div>
       <hr/>
@@ -56,10 +59,14 @@ export default {
   components: {Slider},
   created() {
     this.checkLogin({path: '/login'});
-    this.getNotebooks();
+    this.getAll();
     this.getTrashNotes()
         .then(() => {
           this.setCurTrashNote({curTrashNoteId: this.$route.query.noteId});
+          this.$router.replace({
+            path: '/trash',
+            query: { noteId: this.curTrashNote.id }
+          })
         });
   },
   computed: {
@@ -82,16 +89,37 @@ export default {
       'deleteTrashNote',
       'revertTrashNote',
       'getTrashNotes',
-      'getNotebooks'
+      'getAll'
     ]),
 
     onDelete() {
-      console.log({noteId: this.curTrashNote.id});
-      this.deleteTrashNote({noteId: this.curTrashNote.id});
+      this.$confirm('删除后将无法恢复', '确定删除？', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return this.deleteTrashNote({ noteId: this.curTrashNote.id })
+      }).then(() => {
+        console.log('delete success')
+        this.setCurTrashNote()
+        console.log(1111+this.curTrashNote.id)
+        this.$router.replace({
+          path: '/trash',
+          query: { noteId: this.curTrashNote.id }
+        })
+      })
     },
 
     onRevert() {
-      this.revertTrashNote({noteId: this.curTrashNote.id});
+      this.revertTrashNote({noteId: this.curTrashNote.id})
+          //这一步是重置vuex状态，因为当删除后，需要去set一下当前的TrashNote，然后再路透代替一下。
+          .then(() => {
+            this.setCurTrashNote()
+            this.$router.replace({
+              path: '/trash',
+              query: { noteId: this.curTrashNote.id }
+            })
+          });
     }
 
   },

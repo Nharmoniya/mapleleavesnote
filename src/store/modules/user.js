@@ -47,7 +47,17 @@ const actions = {
           commit('setUser', { user: res.data })
         }
       })
-  }
+  },
+
+  logout({ commit }, payload = { path: '/login' }) {
+    return loginApi.logout()
+      .then(() => {
+        commit('setUser', { user: null })
+        console.log(payload)
+        console.log("222"+this.user)
+        router.push(payload)
+      })
+  },
 
 };
 

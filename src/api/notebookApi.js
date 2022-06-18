@@ -25,7 +25,6 @@ export default {
         reject(err)
       })
     })
-
   },
   createNotebooks({title = ''} = {title: ''}) {
     return new Promise((resolve, reject) => {

@@ -1,7 +1,8 @@
 <template>
   <div class="note-sidebar">
-    <el-button class="btn add-note" @click="onAddNote" type="success" title="添加笔记">+添加笔记</el-button>
-    <el-dropdown class="notebook-title" @command="handleCommand" placement="bottom" trigger="click">
+    <el-button v-if="curBook.id" class="btn add-note" @click="onAddNote" type="success" title="添加笔记">+添加笔记</el-button>
+    <span v-if="!curBook.id" class="notebook-title">无笔记本</span>
+    <el-dropdown v-if="curBook.id" class="notebook-title" @command="handleCommand" placement="bottom" trigger="click">
       <span class="el-dropdown-link">
         {{ curBook.title }} <i class="iconfont icon-down"></i>
       </span>
@@ -33,7 +34,7 @@ import {mapGetters, mapMutations, mapActions, mapState} from 'vuex';
 
 export default {
   created() {
-    this.getNotebooks()
+    this.getAll()
         .then(() => {
           this.setCurBook({curBookId: this.$route.query.notebookId});
           return this.getNotes({notebookId: this.curBook.id});
@@ -59,7 +60,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      'getNotebooks',
+      'getAll',
       'getNotes',
       'addNote',
       'checkLogin'

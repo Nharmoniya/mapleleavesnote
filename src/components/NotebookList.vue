@@ -12,7 +12,7 @@
           <span class="no">
           <i class="el-icon-s-order"></i>
             <span class="tittle"><strong>{{ notebook.title }}</strong></span>
-          <span class="noteCounts">{{ notebook.noteCounts }}</span>
+<!--          <span class="noteCounts">{{ notebook.noteCounts }}</span>-->
           </span>
             <span class="action">
               <span class="createAt">{{ notebook.createdAtFriendly }}</span>
@@ -40,15 +40,14 @@ export default {
   },
   created() {
     this.checkLogin({path: '/login'});
-    this.getNotebooks();
-    console.log(this.notebooks);
+    this.getAll();
   },
   computed: {
     ...mapGetters(['notebooks'])
   },
   methods: {
     ...mapActions([
-      'getNotebooks',
+      'getAll',
       'addNotebook',
       'updateNotebook',
       'deleteNotebook',

@@ -52,7 +52,7 @@ const actions = {
   revertTrashNote({commit}, {noteId}) {
     return Trash.revertNote({noteId}).then(res => {
       commit('deleteTrashNote', {noteId});
-      Message.success('笔记还原成功');
+      Message.success(res.msg);
     });
   }
 

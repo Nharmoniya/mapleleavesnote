@@ -94,7 +94,7 @@ export default {
           }).catch(() => {
         this.statusText = '保存出错';
       });
-    }, 300),
+    }, 3000),
   }
 };
 </script>

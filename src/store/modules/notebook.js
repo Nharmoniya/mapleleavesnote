@@ -19,6 +19,7 @@ const getters = {
 }
 
 const mutations = {
+
   setNotebooks(state, payload) {
     state.notebooks = payload.notebooks
   },
@@ -43,7 +44,7 @@ const mutations = {
 }
 
 const actions = {
-  getNotebooks({ commit,state}) {
+  getAll({ commit,state}) {
     if(state.notebooks !== null) return Promise.resolve()
     return Notebook.getNotebooks()
       .then(res => {
@@ -78,7 +79,7 @@ const actions = {
 }
 
 
-export default {
+export default{
   state,
   getters,
   mutations,
