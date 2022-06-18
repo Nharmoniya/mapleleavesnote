@@ -1,6 +1,6 @@
 <template>
   <div class="note-sidebar">
-    <el-button v-if="curBook.id" class="btn add-note" @click="onAddNote" type="success" title="添加笔记">+添加笔记</el-button>
+    <el-button v-if="curBook.id" class="add-note" @click="onAddNote" type="success" title="添加笔记">+添加笔记</el-button>
     <span v-if="!curBook.id" class="notebook-title">无笔记本</span>
     <el-dropdown v-if="curBook.id" class="notebook-title" @command="handleCommand" placement="bottom" trigger="click">
       <span class="el-dropdown-link">
